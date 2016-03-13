@@ -69,9 +69,10 @@ public class PlayState extends State {
                 }
             }
             if(tube.Collides(bird.getBounds())){
-                gsm.Set(new PlayState(gsm, cam));
+                //gsm.Set(new PlayState(gsm, cam));
                 //com.mygdx.game.
                 //執行到這裡就是死掉了，但我不知道如何在這裡呼叫GoToMaps
+                gsm.callback.StartMaps();
             }
 
         }

@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,22 +14,23 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.States.GameStateManager;
 import com.mygdx.game.States.MenuState;
 
-public class flappyDemo implements ApplicationListener {
+public class flappyDemo extends Game {
 	public static final int WIDTH = 480;
 	public static int HEIGHT = 800;
 	public static final String TITLE = "FlappyDemo";
 	private GameStateManager gsm; //遊戲狀態管理員，控制遊戲狀態
 	private SpriteBatch batch;
 	private OrthographicCamera cam;
-
 	private Music music;
+	//private StartMapsCallback callback;
+	private Callbacks callback;
 	
 	@Override
 	public void create () {  //這裡是遊戲的Main
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, WIDTH, HEIGHT);
 		batch = new SpriteBatch();
-		gsm = new GameStateManager();
+		gsm = new GameStateManager(callback);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
 		music.setLooping(true);
@@ -62,7 +64,11 @@ public class flappyDemo implements ApplicationListener {
 
 	@Override
 	public void dispose() {
-		//super.dispose();
+		super.dispose();
 		music.dispose();
+	}
+
+	public void setCallback(Callbacks callback) {
+		this.callback = callback;
 	}
 }
